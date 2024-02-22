@@ -3,7 +3,7 @@ import { useContext, useEffect, useState } from "react";
 import * as context from "../helper/Context";
 
 const CurrentWeather = () => {
-  let { location, setLocation }: any = useContext(context.location);
+  let { location }: any = useContext(context.location);
   let [data, setData]: any = useState(null);
   const [time, setTime]: any = useState(null);
   const [image, setImage]: any = useState(null);
@@ -13,7 +13,7 @@ const CurrentWeather = () => {
   const getCurrentWeather = async () => {
     console.log("location", location);
 
-    if (location.latitude != undefined) {
+    if (location.latitude !== undefined) {
       await axios
         .get(
           `https://api.openweathermap.org/data/2.5/weather?lat=${location.latitude}&lon=${location.longitude}&appid=73d50daa62ff9ab6a412d4f16d0d6499&units=metric&mode=json&lang=id`
