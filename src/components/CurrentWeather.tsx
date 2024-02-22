@@ -2,6 +2,7 @@ import axios from "axios";
 import moment from "moment";
 import { useContext, useEffect, useState } from "react";
 import * as context from "../helper/Context";
+import ListCurrentWeather from "./ListCurrentWeather";
 
 const CurrentWeather = () => {
   let { location }: any = useContext(context.location);
@@ -81,70 +82,51 @@ const CurrentWeather = () => {
           </div>
           <div className="flex flex-row max-sm:flex-wrap max-sm:space-y-5 max-sm:space-x-0 space-x-5  w-full p-2">
             <div className="flex flex-col items-center space-y-3 text-2xl max-sm:text-base w-full justify-center">
-              <div className="flex max-sm:w-full w-3/4 justify-between border-b-4">
-                <span className="w-full">
-                  Cloudiness{" "}
-                  <i className="fa fa-cloud text-xl max-sm:text-base"></i>
-                </span>
-                <span>{data?.clouds.all}%</span>
-              </div>
-              <div className="flex max-sm:w-full w-3/4 justify-between border-b-4">
-                <span className="">
-                  {" "}
-                  <span>Feels Like </span>
-                  <i className=" fa-solid fa-temperature-low text-xl max-sm:text-base"></i>
-                </span>
-                <span>{Math.round(data?.main.feels_like)}°C</span>
-              </div>
-              <div className="flex max-sm:w-full w-3/4 justify-between border-b-4">
-                <span>
-                  Humidity{" "}
-                  <i className="fa-solid fa-droplet text-xl max-sm:text-base"></i>
-                </span>
-                <span>{Math.round(data?.main.humidity)}%</span>
-              </div>
-              <div className="flex max-sm:w-full w-3/4 justify-between border-b-4">
-                <span>
-                  Pressure{" "}
-                  <i className="fa-solid fa-arrows-to-circle text-xl max-sm:text-base"></i>
-                </span>
-                <span>{Math.round(data?.main.pressure)} hPa</span>
-              </div>
-              <div className="flex max-sm:w-full w-3/4 justify-between border-b-4">
-                <span>
-                  Max Temperature{" "}
-                  <i className="fa-solid fa-temperature-arrow-up text-xl max-sm:text-base"></i>
-                </span>
-                <span>{Math.round(data?.main.temp_max)}°C</span>
-              </div>
-              <div className="flex max-sm:w-full w-3/4 justify-between border-b-4">
-                <span>
-                  Min Temperature{" "}
-                  <i className="fa-solid fa-temperature-arrow-down text-xl max-sm:text-base"></i>
-                </span>
-                <span>{Math.round(data?.main.temp_min)}°C</span>
-              </div>
-              <div className="flex max-sm:w-full w-3/4 justify-between border-b-4">
-                <span>
-                  Visibility{" "}
-                  <i className="fa-regular fa-eye text-xl max-sm:text-base"></i>
-                </span>
-                <span>{Math.round(data?.visibility)}m</span>
-              </div>
-              <div className="flex max-sm:w-full w-3/4 justify-between border-b-4">
-                <span>
-                  Wind Speed{" "}
-                  <i className="fa-solid fa-wind text-xl max-sm:text-base"></i>
-                </span>
-                <span>{Math.round(data?.wind.speed)}m/s</span>
-              </div>
-              <div className="flex max-sm:w-full w-3/4 justify-between border-b-4">
-                <span>
-                  Wind Direction{" "}
-                  <i className="fa-solid fa-location-arrow text-xl max-sm:text-base"></i>
-                </span>
-                <span>{Math.round(data?.wind.deg)}°</span>
-              </div>
+              <ListCurrentWeather
+                name="Cloudiness"
+                data={data?.clouds.all + "%"}
+                icon={"fa fa-cloud "}
+              />
+              <ListCurrentWeather
+                name="Feels Like"
+                data={Math.round(data?.main.feels_like) + "°C"}
+                icon="fa-solid fa-temperature-low"
+              />
+              <ListCurrentWeather
+                name="Humidity"
+                data={Math.round(data?.main.humidity) + "%"}
+                icon={"fa-solid fa-droplet"}
+              />
+              <ListCurrentWeather
+                name="Pressure"
+                data={Math.round(data?.main.pressure) + " hPa"}
+                icon={"fa-solid fa-arrows-to-circle"}
+              />
+              <ListCurrentWeather
+                name="Max Temperature"
+                data={Math.round(data?.main.temp_max) + "°C"}
+                icon={"fa-solid fa-arrows-to-circle"}
+              />
+              <ListCurrentWeather
+                name="Min Temperature"
+                data={Math.round(data?.main.temp_min) + "°C"}
+                icon={"fa-solid fa-temperature-arrow-down"}
+              />
+              <ListCurrentWeather
+                name="Visibility"
+                data={Math.round(data?.visibility) + "m"}
+                icon={"fa-regular fa-eye"}
+              />
+              <ListCurrentWeather
+                name="Wind Speed"
+                data={Math.round(data?.wind.speed) + "m/s"}
+                icon={"fa-solid fa-wind"}
+              />
+              <ListCurrentWeather
+                name="Wind Direction"
+                data={Math.round(data?.wind.deg) + "°"}
+                icon={"fa-solid fa-location-arrow"}
+              />
             </div>
           </div>
         </div>
