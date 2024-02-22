@@ -8,8 +8,6 @@ const CurrentWeather = () => {
   const [time, setTime]: any = useState(null);
   const [image, setImage]: any = useState(null);
 
-  // var date = new Date();
-
   const getCurrentWeather = async () => {
     if (location.latitude !== undefined) {
       await axios
