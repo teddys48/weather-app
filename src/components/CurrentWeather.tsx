@@ -6,6 +6,8 @@ import ListCurrentWeather from "./ListCurrentWeather";
 
 const CurrentWeather = () => {
   let { location }: any = useContext(context.location);
+  console.log(location)
+  let apiKey = useContext(context.weatherAPIKey);
   let [data, setData]: any = useState(null);
   const [time, setTime]: any = useState(null);
   const [image, setImage]: any = useState(null);
@@ -14,7 +16,7 @@ const CurrentWeather = () => {
     if (location.latitude !== undefined) {
       await axios
         .get(
-          `https://api.openweathermap.org/data/2.5/weather?lat=${location.latitude}&lon=${location.longitude}&appid=73d50daa62ff9ab6a412d4f16d0d6499&units=metric&mode=json`
+          `https://api.openweathermap.org/data/2.5/weather?lat=${location.latitude}&lon=${location.longitude}&appid=${apiKey}&units=metric&mode=json`
         )
         .then(async (data) => {
           console.log(data.data);
