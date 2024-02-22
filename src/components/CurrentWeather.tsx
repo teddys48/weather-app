@@ -6,7 +6,7 @@ import ListCurrentWeather from "./ListCurrentWeather";
 
 const CurrentWeather = () => {
   let { location }: any = useContext(context.location);
-  console.log(location)
+  console.log(location);
   let apiKey = useContext(context.weatherAPIKey);
   let [data, setData]: any = useState(null);
   const [time, setTime]: any = useState(null);
@@ -14,6 +14,13 @@ const CurrentWeather = () => {
 
   const getCurrentWeather = async () => {
     if (location.latitude !== undefined) {
+      // await axios
+      //   .get(
+      //     `https://api.openweathermap.org/data/2.5/forecast?lat=${location.latitude}&lon=${location.longitude}&appid=${apiKey}`
+      //   )
+      //   .then((res) => {
+      //     console.log(res.data);
+      //   });
       await axios
         .get(
           `https://api.openweathermap.org/data/2.5/weather?lat=${location.latitude}&lon=${location.longitude}&appid=${apiKey}&units=metric&mode=json`
@@ -47,14 +54,14 @@ const CurrentWeather = () => {
 
   useEffect(() => {
     getCurrentWeather();
-    let date = new Date();
+    let date = moment().format("HH:mm");
     setTime(date.toLocaleString());
   }, [location]);
 
   return (
     <>
       <div className="flex flex-col border border-zinc-100 w-full p-2 space-y-2 bg-white rounded-md">
-        <div className="flex text-2xl max-sm:text-base font-thin justify-between border-b-2 pb-1">
+        <div className="flex text-2xl px-5 max-sm:px-0 max-sm:text-base font-thin justify-between border-b-2 pb-1">
           <span className="flex">Current Weather</span>
           <span className="flex">{time}</span>
         </div>
