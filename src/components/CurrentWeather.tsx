@@ -14,7 +14,7 @@ const CurrentWeather = () => {
     if (location.latitude !== undefined) {
       await axios
         .get(
-          `https://api.openweathermap.org/data/2.5/weather?lat=${location.latitude}&lon=${location.longitude}&appid=73d50daa62ff9ab6a412d4f16d0d6499&units=metric&mode=json`
+          `https://api.openweathermap.org/data/2.5/weather?lat=${location.latitude}&lon=${location.longitude}&appid=73d50daa62ff9ab6a412d4f16d0d6499&units=metric&mode=json&lang=id`
         )
         .then(async (data) => {
           console.log(data.data);
@@ -47,7 +47,8 @@ const CurrentWeather = () => {
     getCurrentWeather();
     let date = new Date();
     setTime(date.toLocaleString());
-    let sunrise = moment(1708600473).format("HH:mm:ss");
+    // let sunrise = new Date(1708556303). toUTCString();
+    let sunrise = moment(1708556303).utc(false).format("HH:mm:ss");
     setSun(sunrise);
   }, [location]);
   console.log(sun);

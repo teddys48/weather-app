@@ -1,4 +1,3 @@
-import "./App.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { Page } from "./page/Home";
 import * as context from "./helper/Context";
