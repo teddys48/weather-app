@@ -16,7 +16,7 @@ const SelectBox = () => {
   const onChange = async (val: any) => {
     await axios
       .get(
-        `http://api.openweathermap.org/geo/1.0/direct?q=${val}&limit=1&appid=${apiKey}`
+        `https://api.openweathermap.org/geo/1.0/direct?q=${val}&limit=1&appid=${apiKey}`
       )
       .then((res) => {
         console.log(res.data);
