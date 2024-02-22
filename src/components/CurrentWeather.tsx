@@ -11,8 +11,6 @@ const CurrentWeather = () => {
   // var date = new Date();
 
   const getCurrentWeather = async () => {
-    console.log("location", location);
-
     if (location.latitude !== undefined) {
       await axios
         .get(
