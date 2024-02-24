@@ -2,11 +2,12 @@ import axios from "axios";
 import moment from "moment";
 import { useContext, useEffect, useState } from "react";
 import * as context from "../helper/Context";
+import Card from "./Card";
+import CardTitle from "./CardTitle";
 import ListCurrentWeather from "./ListCurrentWeather";
 
 const CurrentWeather = () => {
   let { location }: any = useContext(context.location);
-  console.log(location);
   let apiKey = useContext(context.weatherAPIKey);
   let [data, setData]: any = useState(null);
   const [time, setTime]: any = useState(null);
@@ -26,7 +27,6 @@ const CurrentWeather = () => {
           `https://api.openweathermap.org/data/2.5/weather?lat=${location.latitude}&lon=${location.longitude}&appid=${apiKey}&units=metric&mode=json`
         )
         .then(async (data) => {
-          console.log(data.data);
           setData(data.data);
           setImage(
             "https://openweathermap.org/img/wn/" +
@@ -60,11 +60,11 @@ const CurrentWeather = () => {
 
   return (
     <>
-      <div className="flex flex-col border border-zinc-100 w-full p-2 space-y-2 bg-white rounded-md">
-        <div className="flex text-2xl px-5 max-sm:px-0 max-sm:text-base font-thin justify-between border-b-2 pb-1">
+      <Card>
+        <CardTitle>
           <span className="flex">Current Weather</span>
           <span className="flex">{time}</span>
-        </div>
+        </CardTitle>
         <div className="flex flex-col w-full p-2 space-y-10">
           <div className="flex flex-row w-full justify-evenly">
             <div className="flex">
@@ -90,7 +90,7 @@ const CurrentWeather = () => {
             </div>
           </div>
           <div className="flex flex-row max-sm:flex-wrap max-sm:space-y-5 max-sm:space-x-0 space-x-5  w-full p-2">
-            <div className="flex flex-col items-center space-y-3 text-2xl max-sm:text-base w-full justify-center">
+            <div className="flex flex-col font-thin items-center space-y-3 text-2xl max-sm:text-sm w-full justify-center">
               <ListCurrentWeather
                 name="Cloudiness"
                 data={data?.clouds.all + "%"}
@@ -114,7 +114,7 @@ const CurrentWeather = () => {
               <ListCurrentWeather
                 name="Max Temperature"
                 data={Math.round(data?.main.temp_max) + "°C"}
-                icon={"fa-solid fa-arrows-to-circle"}
+                icon={"fa-solid fa-temperature-arrow-up"}
               />
               <ListCurrentWeather
                 name="Min Temperature"
@@ -139,7 +139,7 @@ const CurrentWeather = () => {
             </div>
           </div>
         </div>
-      </div>
+      </Card>
     </>
   );
 };

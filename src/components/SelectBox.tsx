@@ -1,7 +1,8 @@
 import axios from "axios";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import Select from "react-select";
 import { location, weatherAPIKey } from "../helper/Context";
+import Card from "./Card";
 
 const SelectBox = () => {
   console.log("select box");
@@ -13,27 +14,50 @@ const SelectBox = () => {
     { value: "Depok", label: "Depok" },
   ];
 
-  const onChange = async (val: any) => {
-    await axios
-      .get(
-        `https://api.openweathermap.org/geo/1.0/direct?q=${val}&limit=1&appid=${apiKey}`
-      )
-      .then((res) => {
-        console.log(res.data);
-        let latitude = res.data[0].lat;
-        let longitude = res.data[0].lon;
+  const setCurrentLocation = () => {
+    navigator.geolocation.getCurrentPosition(
+      (pos) => {
+        console.log(pos.coords.latitude);
+        let latitude = pos.coords.latitude;
+        let longitude = pos.coords.longitude;
         setLocation({ latitude, longitude });
-      });
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
+  };
+
+  useEffect(() => {
+    setCurrentLocation();
+  }, []);
+
+  const onChange = async (val: any) => {
+    if (val === undefined) {
+      setCurrentLocation();
+    } else {
+      await axios
+        .get(
+          `https://api.openweathermap.org/geo/1.0/direct?q=${val}&limit=1&appid=${apiKey}`
+        )
+        .then((res) => {
+          console.log(res.data);
+          let latitude = res.data[0].lat;
+          let longitude = res.data[0].lon;
+          setLocation({ latitude, longitude });
+        });
+    }
   };
 
   return (
     <>
-      <div className="flex flex-col border border-zinc-100 w-full p-2 space-y-2 bg-white rounded-md">
+      <Card>
         <Select
+          isClearable
           options={optionList}
-          onChange={(val: any) => onChange(val.value)}
+          onChange={(val: any) => onChange(val?.value)}
         />
-      </div>
+      </Card>
     </>
   );
 };
