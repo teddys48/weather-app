@@ -9,12 +9,13 @@ const Forecast = () => {
   let apiKey = useContext(context.weatherAPIKey);
   let { location }: any = useContext(context.location);
   let [data, setData]: any = useState(null);
+  const [icon, setIcon] = useState(null);
 
   const getForecastData = async () => {
     if (location.latitude !== undefined) {
       await axios
         .get(
-          `https://api.openweathermap.org/data/2.5/forecast?lat=${location.latitude}&lon=${location.longitude}&appid=${apiKey}`
+          `https://api.openweathermap.org/data/2.5/forecast?lat=${location.latitude}&lon=${location.longitude}&appid=${apiKey}&units=metric`
         )
         .then((res) => {
           console.log(res.data);
@@ -26,6 +27,17 @@ const Forecast = () => {
     }
   };
 
+  const getWeatherIcon = async (icon: string) => {
+    return await axios
+      .get(`https://openweathermap.org/img/wn/${icon}@4x.png`)
+      .then((res) => {
+        return res.data;
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   useEffect(() => {
     getForecastData();
   }, [location]);
@@ -34,15 +46,49 @@ const Forecast = () => {
     <>
       <Card>
         <CardTitle>
-          <span className="flex">Forecast</span>
+          <span className="flex" key="key">
+            Forecast
+          </span>
         </CardTitle>
         <div className="flex space-x-10 w-full flex-row overflow-x-scroll">
           {data?.list.map((val: any) => {
             return (
               <>
-                <span className="flex w-full text-xs">
-                  {moment(val.dt_txt.slice(0, -3)).format("YYYY-MM-D")}
-                </span>
+                <div className="w-full flex flex-col space-y-0 justify-center items-center">
+                  <div className="flex w-full max-sm:text-sm space-x-1">
+                    <span className="flex w-full space-x-1">
+                      <span className="flex">
+                        {moment(val.dt_txt).format("DD")}
+                      </span>{" "}
+                      <span className="flex">
+                        {moment(val.dt_txt).format("MMMM")}
+                      </span>
+                    </span>
+                    ,
+                    <span className="flex">
+                      {moment(val.dt_txt).format("hh")}
+                    </span>
+                    <span className="flex">
+                      {moment(val.dt_txt).format("A")}
+                    </span>
+                  </div>
+                  <div className="flex max-sm:text-sm w-full justify-center items-center">
+                    <img
+                      width="70px"
+                      src={
+                        "https://openweathermap.org/img/wn/" +
+                        val.weather[0].icon +
+                        "@2x.png"
+                      }
+                    ></img>
+                    <span className="flex font-thin max-sm:text-xs">
+                      {parseInt(val.main.temp)}°C
+                    </span>
+                  </div>
+                  <div className="flex w-full justify-center items-center max-sm:text-sm">
+                    <span className="flex">{val?.weather[0].description}</span>
+                  </div>
+                </div>
               </>
             );
           })}
