@@ -89,6 +89,7 @@ const CurrentWeather = () => {
               </span>
             </div>
           </div>
+          {/* <span className="flex w-full border-b-2"></span> */}
           <div className="flex flex-row max-sm:flex-wrap max-sm:space-y-5 max-sm:space-x-0 space-x-5  w-full p-2">
             <div className="flex flex-col font-thin items-center space-y-3 text-2xl max-sm:text-sm w-full justify-center">
               <ListCurrentWeather
