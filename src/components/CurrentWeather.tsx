@@ -9,6 +9,7 @@ import ListCurrentWeather from "./ListCurrentWeather";
 const CurrentWeather = () => {
   let { location }: any = useContext(context.location);
   let apiKey = useContext(context.weatherAPIKey);
+  let stateApiKey = useContext(context.stateAPIKey);
   let [data, setData]: any = useState(null);
   const [time, setTime]: any = useState(null);
   const [image, setImage]: any = useState(null);
@@ -16,11 +17,11 @@ const CurrentWeather = () => {
   const getCurrentWeather = async () => {
     if (location.latitude !== undefined) {
       // await axios
-      //   .get(
-      //     `https://api.openweathermap.org/data/2.5/forecast?lat=${location.latitude}&lon=${location.longitude}&appid=${apiKey}`
-      //   )
+      //   .get(`https://api.countrystatecity.in/v1/countries`, {
+      //     headers: { "X-CSCAPI-KEY": stateApiKey },
+      //   })
       //   .then((res) => {
-      //     console.log(res.data);
+      //     console.log("country", res.data);
       //   });
       await axios
         .get(

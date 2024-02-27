@@ -1,18 +1,40 @@
 import axios from "axios";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import Select from "react-select";
-import { location, weatherAPIKey } from "../helper/Context";
+import { location, stateAPIKey, weatherAPIKey } from "../helper/Context";
 import Card from "./Card";
 
 const SelectBox = () => {
   console.log("select box");
   let apiKey = useContext(weatherAPIKey);
+  let stateApiKey = useContext(stateAPIKey);
   let { setLocation }: any = useContext(location);
-  const optionList = [
-    { value: "Bogor", label: "Bogor" },
-    { value: "Jakarta", label: "Jakarta" },
-    { value: "Depok", label: "Depok" },
-  ];
+  const [countryList, setCountryList]: any = useState(null);
+  const [cityList, setCityList]: any = useState(null);
+  const [selectCountryVal, setSelectCountryVal]: any = useState(undefined);
+  const [cityName, setCityName]: any = useState(null);
+
+  const getCountryList = async () => {
+    await axios
+      .get(`https://api.countrystatecity.in/v1/countries`, {
+        headers: { "X-CSCAPI-KEY": stateApiKey },
+      })
+      .then((res) => {
+        console.log("country", res.data);
+        const data: any = [];
+        res.data?.map((val: any) => {
+          let obj = {
+            value: val.iso2,
+            label: val.name,
+          };
+          data.push(obj);
+        });
+        setCountryList(data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   const setCurrentLocation = () => {
     navigator.geolocation.getCurrentPosition(
@@ -28,11 +50,50 @@ const SelectBox = () => {
     );
   };
 
+  const getCityList = async (country: string) => {
+    if (country === undefined) {
+    } else {
+      await axios
+        .get(`https://api.countrystatecity.in/v1/countries/${country}/cities`, {
+          headers: { "X-CSCAPI-KEY": stateApiKey },
+        })
+        .then((res) => {
+          console.log("country", res.data);
+          const data: any = [];
+          res.data?.map((val: any) => {
+            let obj = {
+              value: val.name,
+              label: val.name,
+            };
+            data.push(obj);
+          });
+          setCityList(data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  };
+
   useEffect(() => {
     setCurrentLocation();
+    getCountryList();
   }, []);
 
-  const onChange = async (val: any) => {
+  const onChangeCountry = async (val: any) => {
+    if (val === undefined) {
+      setCityList(null);
+      onChangeCity(val);
+    } else {
+      getCityList(val);
+    }
+
+    // setValueToNull(val);
+    setSelectCountryVal(val);
+  };
+
+  const onChangeCity = async (val: string) => {
+    setCityName(val);
     if (val === undefined) {
       setCurrentLocation();
     } else {
@@ -52,11 +113,26 @@ const SelectBox = () => {
   return (
     <>
       <Card>
-        <Select
-          isClearable
-          options={optionList}
-          onChange={(val: any) => onChange(val?.value)}
-        />
+        <div className="flex space-x-2 max-sm:space-x-0 max-sm:text-xs max-sm:flex-col w-full max-sm:space-y-1 max-sm:justify-evenly">
+          <Select
+            className="w-full"
+            isClearable
+            placeholder="SELECT COUNTRY"
+            options={countryList}
+            onChange={(val: any) => onChangeCountry(val?.value)}
+          />
+          <Select
+            className="w-full"
+            isDisabled={selectCountryVal === undefined ? true : false}
+            isClearable
+            tabSelectsValue
+            value={cityName === undefined ? null : "alksdnskladnaslkndlska"}
+            defaultValue={cityName}
+            placeholder="SELECT CITY"
+            options={cityList}
+            onChange={(val: any) => onChangeCity(val?.value)}
+          />
+        </div>
       </Card>
     </>
   );
