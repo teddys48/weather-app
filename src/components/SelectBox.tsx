@@ -103,6 +103,9 @@ const SelectBox = () => {
         )
         .then((res) => {
           console.log(res.data);
+          if (res.data[0].lat === undefined) {
+            setCurrentLocation();
+          }
           let latitude = res.data[0].lat;
           let longitude = res.data[0].lon;
           setLocation({ latitude, longitude });

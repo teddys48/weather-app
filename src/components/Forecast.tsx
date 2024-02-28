@@ -81,7 +81,7 @@ const Forecast = () => {
                         "@2x.png"
                       }
                     ></img>
-                    <span className="flex font-thin max-sm:text-xs">
+                    <span className="flex font-medium max-sm:text-xs">
                       {parseInt(val.main.temp)}°C
                     </span>
                   </div>
