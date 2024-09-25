@@ -45,18 +45,18 @@ const Forecast = () => {
   return (
     <>
       <Card>
-        <CardTitle>
+        {/* <CardTitle>
           <span className="flex" key="key">
-            Forecast
+            7 Days Forecast
           </span>
-        </CardTitle>
-        <div className="flex space-x-10 w-full flex-row overflow-x-scroll">
+        </CardTitle> */}
+        <div className="flex items-center justify-center space-x-10 w-full flex-row overflow-x-scroll">
           {data?.list.map((val: any) => {
             return (
               <>
-                <div className="w-full flex flex-col space-y-0 justify-center items-center">
-                  <div className="flex w-full max-sm:text-sm space-x-1">
-                    <span className="flex w-full space-x-1">
+                <div className="w-full flex flex-col space-y-0 max-sm:space-x-10 justify-center items-center">
+                  <div className="flex w-full justify-center items-center text-sm max-sm:text-xs space-x-1">
+                    <span className="flex w-full justify-center items-center space-x-1">
                       <span className="flex">
                         {moment(val.dt_txt).format("DD")}
                       </span>{" "}
@@ -72,7 +72,7 @@ const Forecast = () => {
                       {moment(val.dt_txt).format("A")}
                     </span>
                   </div>
-                  <div className="flex max-sm:text-sm w-full justify-center items-center">
+                  <div className="flex text-sm max-sm:text-xs w-full justify-center items-center">
                     <img
                       width="70px"
                       src={
@@ -85,7 +85,7 @@ const Forecast = () => {
                       {parseInt(val.main.temp)}°C
                     </span>
                   </div>
-                  <div className="flex w-full justify-center items-center max-sm:text-sm">
+                  <div className="flex text-sm w-full justify-center items-center max-sm:text-xs">
                     <span className="flex">{val?.weather[0].description}</span>
                   </div>
                 </div>

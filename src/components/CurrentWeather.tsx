@@ -62,11 +62,11 @@ const CurrentWeather = () => {
   return (
     <>
       <Card>
-        <CardTitle>
+        {/* <CardTitle>
           <span className="flex">Current Weather</span>
           <span className="flex">{time}</span>
-        </CardTitle>
-        <div className="flex flex-col w-full p-2 space-y-10">
+        </CardTitle> */}
+        <div className="flex flex-row max-sm:flex-col w-full p-2 space-y-10">
           <div className="flex flex-row w-full justify-evenly">
             <div className="flex">
               <span className="flex flex-row justify-center items-center">
@@ -77,7 +77,7 @@ const CurrentWeather = () => {
                     src={image}
                     alt="icon"
                   ></img>
-                  <span>{data?.weather[0].description}</span>
+                  {/* <span>{data?.weather[0].description}</span> */}
                 </span>
                 <span className="flex flex-col text-xl">
                   <span>{parseInt(data?.main.temp)}°C</span>
@@ -91,7 +91,7 @@ const CurrentWeather = () => {
             </div>
           </div>
           {/* <span className="flex w-full border-b-2"></span> */}
-          <div className="flex flex-row max-sm:flex-wrap max-sm:space-y-5 max-sm:space-x-0 space-x-5  w-full p-2">
+          {/* <div className="flex flex-row max-sm:flex-wrap max-sm:space-y-5 max-sm:space-x-0 space-x-5  w-full p-2">
             <div className="flex flex-col font-thin items-center space-y-3 text-2xl max-sm:text-sm w-full justify-center">
               <ListCurrentWeather
                 name="Cloudiness"
@@ -139,7 +139,7 @@ const CurrentWeather = () => {
                 icon={"fa-solid fa-location-arrow"}
               />
             </div>
-          </div>
+          </div> */}
         </div>
       </Card>
     </>

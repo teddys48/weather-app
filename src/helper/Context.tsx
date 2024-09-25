@@ -5,5 +5,6 @@ const weatherAPIKey = createContext("73d50daa62ff9ab6a412d4f16d0d6499");
 const stateAPIKey = createContext(
   "WGlqcTF3MVg0NWZGNllGWkFmWHpJd1ZWbWtGSGxIVnhBYXFIYTdOdg=="
 );
+const dataDetailWeather = createContext(null);
 
-export { location, weatherAPIKey, stateAPIKey };
+export { location, weatherAPIKey, stateAPIKey, dataDetailWeather };

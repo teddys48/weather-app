@@ -23,7 +23,7 @@ function App() {
   }, []);
 
   return (
-    <div className="flex w-full h-full font-normal bg-blue-300">
+    <div className="flex w-full h-screen font-normal bg-blue-300">
       <context.location.Provider value={{ location, setLocation }}>
         <Router>
           <Routes>
