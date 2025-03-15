@@ -1,0 +1,40 @@
+# tahapan
+stages:
+  - cleaning
+  - build_image
+  - deploy
+
+# build image on development server
+build_image:
+  stage: build_image 
+  script:
+    - docker build -t 103.127.139.168:5000/$PROJECT_NAME:$CI_PIPELINE_ID .
+    - docker push 103.127.139.168:5000/$PROJECT_NAME:$CI_PIPELINE_ID
+  environment:
+  only:
+    - master
+  tags:
+    - test2 
+
+# deploy to development server
+deploy_development:
+  stage: deploy
+  script:
+    - docker stack deploy --compose-file compose.yml test-nextjs
+  environment:
+  only:
+    - master
+  tags:
+    - test2  
+
+# deploy to development server
+cleaning_image_and_container:
+  stage: cleaning
+  script:
+    - echo y | docker container prune
+    - echo y | docker image prune -a
+  environment:
+  only:
+    - master
+  tags:
+    - test2
